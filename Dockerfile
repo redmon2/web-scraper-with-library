@@ -1,6 +1,7 @@
 FROM python:3.6.12-alpine3.12
 
 COPY main.py main.py
+COPY summary.py summary.py
 COPY requirements.txt requirements.txt
 COPY crontab crontab
 
