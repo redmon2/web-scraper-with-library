@@ -71,4 +71,7 @@ def get_unique_values(values):
 	value_set = set(values)
 	return list(value_set)
 
+if len(sys.argv) != 2:
+	sys.exit("Invalid arg count. Expected format: python3 summary.py [daily/monthly/yearly]")
+
 get_headlines(sys.argv[1])

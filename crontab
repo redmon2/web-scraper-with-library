@@ -1,4 +1,6 @@
-0 * * * * python3 /main.py >> /cron_log.log
+0 * * * * python3 /main.py ap >> /cron_log.log
+0 * * * * python3 /main.py cnn >> /cron_log.log
+
 0 0 * * * python3 /summary.py daily >> /cron_log.log
 0 0 0 * * python3 /summary.py monthly >> /cron_log.log
 0 0 1 1 * python3 /summary.py yearly >> /cron_log.log
