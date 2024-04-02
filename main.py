@@ -17,7 +17,7 @@ if len(sys.argv) != 2:
 site = sys.argv[1]
 num_headlines = 3
 
-valid_sites = ["ap", "cnn", "fox"]
+valid_sites = ["ap", "cnn", "fox", "nbc"]
 if site not in valid_sites:
 	sys.exit("Invalid site: " + site)
 
@@ -33,6 +33,10 @@ elif site == "fox":
 	page_url = "https://www.foxnews.com/us"
 	element_tag = "h2"
 	element_class = "title"
+elif site == "nbc":
+	page_url = "https://www.nbcnews.com/us-news"
+	element_tag = "span"
+	element_class = "tease-card__headline"
 
 page_to_scrape = requests.get(page_url)
 soup = BeautifulSoup(page_to_scrape.text, "html.parser")
@@ -58,7 +62,7 @@ for header in headers:
 		break
 	if site == "ap":
 		headline = header.a.span.text
-	elif site == "cnn":
+	elif site == "cnn" or site == "nbc":
 		headline = header.text
 	elif site == "fox":
 		headline = header.a.text
