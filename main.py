@@ -17,7 +17,7 @@ if len(sys.argv) != 2:
 site = sys.argv[1]
 num_headlines = 3
 
-valid_sites = ["ap", "cnn"]
+valid_sites = ["ap", "cnn", "fox"]
 if site not in valid_sites:
 	sys.exit("Invalid site: " + site)
 
@@ -29,6 +29,10 @@ elif site == "cnn":
 	page_url = "https://www.cnn.com/us"
 	element_tag = "span"
 	element_class = "container__headline-text"
+elif site == "fox":
+	page_url = "https://www.foxnews.com/us"
+	element_tag = "h2"
+	element_class = "title"
 
 page_to_scrape = requests.get(page_url)
 soup = BeautifulSoup(page_to_scrape.text, "html.parser")
@@ -46,9 +50,7 @@ def save_headline(headline):
 	headlines = db.headlines
 	status = headlines.insert_one({"Site":site,"Headline":headline,"Year":year,"Month":month,"Day":day,"Hour":hour})
 
-
-if site == "ap" or site == "cnn":
-	headers = soup.findAll(element_tag, class_=element_class)
+headers = soup.findAll(element_tag, class_=element_class)
 
 count = 0
 for header in headers:
@@ -58,6 +60,8 @@ for header in headers:
 		headline = header.a.span.text
 	elif site == "cnn":
 		headline = header.text
+	elif site == "fox":
+		headline = header.a.text
 	save_headline(headline)
 	count = count + 1
 
